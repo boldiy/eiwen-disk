@@ -12,8 +12,6 @@
 
 ### 效果展示
 
-![image](http://github.com/boldiy/eiwen-disk/raw/master/doc/image.png))
-![image](https://github.com/boldiy/eiwen-disk/raw/master/doc/image.png))
-![test](https://raw.githubusercontent.com/boldiy/eiwen-disk/master/doc/image.png)
+![图片](https://raw.githubusercontent.com/boldiy/eiwen-disk/master/doc/image.png)
 
 
