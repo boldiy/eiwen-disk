@@ -6,6 +6,10 @@ jobs:
     name: 测试任务
     runs-on: windows-latest
     steps:
-    - name: 打印文本
-      run: |
-        echo 我的名字是阿飞
+      - name: 打印文本
+        run: |
+          echo 我的名字是阿飞
+
+      - name: 安装依赖
+        run: |
+          npm i nodemon -g
