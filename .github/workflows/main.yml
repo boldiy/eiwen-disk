@@ -13,3 +13,7 @@ jobs:
       - name: 安装依赖
         run: |
           npm i nodemon -g
+      - name: 打印文件列表
+        run: |
+          dir
+
