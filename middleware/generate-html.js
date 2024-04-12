@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 let logined = false;
 let currentToken = ''
+const password = '123' //网盘密码
 
 //主页面
 const generateIndex = async (ctx, next) => {
@@ -186,7 +187,7 @@ const generateLogin = async (ctx, next) => {
     let pwd = ctx.query.pwd
     console.log(pwd);
     if (pwd != undefined) {
-        if (pwd == "123") {
+        if (pwd == password) {
             logined = true
             ctx.redirect("/")
         }
