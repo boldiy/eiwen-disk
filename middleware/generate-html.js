@@ -22,7 +22,7 @@ const generateIndex = async (ctx, next) => {
 
     //如果网盘路径不存在则自动创建
     const filePath = process.cwd() + path;
-    if (!fs.existsSync(__dirname + path)) {
+    if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath)
     }
 

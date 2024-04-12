@@ -10,6 +10,10 @@
 
 node版本：v20.11.1
 
+默认访问地址：http://localhost:3000
+
+端口修改地址：/bin/www
+
 ### 效果展示
 
 ![图片](https://raw.githubusercontent.com/boldiy/eiwen-disk/master/doc/image.png)
