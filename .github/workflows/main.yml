@@ -9,6 +9,8 @@ jobs:
       - name: 打印文本
         run: |
           echo 我的名字是阿飞
+      - name: 下载源码
+        uses: actions/checkout@master 
       - name: 安装依赖
         run: |
           npm i nodemon -g
@@ -16,6 +18,4 @@ jobs:
         run: |
           md test2
           dir
-      - name: Deploy Saber Website to GitHub Pages
-        uses: saberland/deploy-gh-pages@v0.1.1
           
