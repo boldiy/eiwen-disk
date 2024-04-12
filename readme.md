@@ -10,7 +10,7 @@
 
 
 
-### 效果展示
+### 效果展示:
 
 ![图片](https://raw.githubusercontent.com/boldiy/eiwen-disk/master/doc/image.png)
 
