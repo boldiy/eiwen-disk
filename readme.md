@@ -8,7 +8,7 @@
 2. 安装nodemon ```npm i nodemon```
 3. 运行程序 ```npm run dev```
 
-
+node版本：v20.11.1
 
 ### 效果展示
 
