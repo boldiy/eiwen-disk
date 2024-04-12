@@ -6,7 +6,7 @@ const bodyparser = require('koa-bodyparser')
 
 const index = require('./routes/index')
 
-// error handler
+// error handler1
 onerror(app)
 
 // middlewares

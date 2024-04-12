@@ -1,19 +1,40 @@
 const fs = require('fs')
 const Path = require('path')
+const jwt = require('jsonwebtoken')
 
+let logined = false;
+let currentToken = ''
+
+//主页面
 const generateIndex = async (ctx, next) => {
-    let body = "";
-    let path = './files/'
-    if (ctx.request.url == '/') { ctx.request.url = '' }
+    if (!logined) {
+        return ctx.redirect("/login")
+    };
 
-    //获取URL中Get参数
-    let params = ctx.request.url.replace('/?path=', '')
+    //如果token过期则跳到登录页面
+    try {
+        jwt.verify(currentToken, 'boldiy')
+    } catch (error) {
+        return ctx.redirect(`/login?msg=${error.message}`)
+    };
 
-    //获取URL中Get参数
-    if (params) {
-        path = './files/' + decodeURI(params) + '/'
+    let path = '/diskfiles/' //默认网盘路径
+
+    //如果网盘路径不存在则自动创建
+    const filePath = process.cwd() + path;
+    if (!fs.existsSync(__dirname + path)) {
+        fs.mkdirSync(filePath)
     }
 
+    //获取path参数
+    let paramsPath = ctx.query.path
+
+    //拼接路径参数
+    if (paramsPath) {
+        path = filePath + decodeURI(paramsPath) + '/'
+    }
+
+    let body = "";
     body += ` <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -114,12 +135,12 @@ const generateIndex = async (ctx, next) => {
         <div class="title">柯耐弗在线网盘</div>
         `
     body += `<ul class="folder-list">`
-    if (params) { body += `<li><a href='javascript:history.go(-1);' style="color:#4f9fff">返回上一级</a></li>` }
+    if (paramsPath) { body += `<li><a href='javascript:history.go(-1);' style="color:#4f9fff">返回上一级</a></li>` }
     body += `<li><div class="name">文件名</div><div class="size">文件大小</div><div class="type">文件类型</div></li>`
 
     //遍历文件列表
-    fs.readdirSync(path).forEach(item => {
-        const fileInfo = fs.statSync(path + item)
+    fs.readdirSync(filePath).forEach(item => {
+        const fileInfo = fs.statSync(filePath + item)
 
         //判断是否文件夹
         if (fileInfo.isDirectory()) {
@@ -141,7 +162,7 @@ const generateIndex = async (ctx, next) => {
             if (ext == '.rar' || ext == '.zip') { className = 'rar' }
             body += `
             <li>
-            <div class="name ${className}"><a href="${path + item}" target="_blank">${item}</a></div>
+            <div class="name ${className}"><a href="${filePath + item}" target="_blank">${item}</a></div>
             <div class="size">${parseFloat(fileInfo.size / 1024).toFixed(2)}KB</div>
             <div class="type">文件</div>
             </li>`
@@ -150,9 +171,105 @@ const generateIndex = async (ctx, next) => {
     body += "</ul>"
     body += `</body>
   </html>`
+    ctx.body = body
+    await next()
+}
+
+//登录页面
+const generateLogin = async (ctx, next) => {
+    let body = "";
+    let msg = "";
+
+    currentToken = jwt.sign({ username: 'guest' }, 'boldiy', { expiresIn: '300s' })
+
+    //获取URL中Get参数
+    let pwd = ctx.query.pwd
+    console.log(pwd);
+    if (pwd != undefined) {
+        if (pwd == "123") {
+            logined = true
+            ctx.redirect("/")
+        }
+        else {
+            msg = "密码错误，请重新输入"
+        }
+    }
+    else {
+        msg = ""
+    }
+    body += ` <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>okonoff文件系统</title>
+            <style>
+            body,ul,li{margin:0;padding:0;font-family:arial}
+            body{background-color: #f0f0f0;}
+            .title{
+                width:100%;
+                border-bottom: solid 1px #ffffff;
+                padding:12px;
+                font-size:28px;
+                background-color: #3885e1;
+                color: white;
+            }
+            .login{
+                border: solid 1px #cecece;
+                padding: 24px;
+                margin: auto;
+                display: flex;
+                flex-direction: column;
+                background-color: #ffffff;
+                border-radius:6px;
+                align-items: center;
+                margin:0px 12px;
+                div{
+                    padding:12px;
+                    margin:12px;
+                }
+                .input{
+                    input{
+                        height: 40px;
+                        font-size: 22px;
+                        border: solid 1px #a1a1a1;
+                        border-radius: 20px;
+                        text-align:center;
+                    }
+                    input::-webkit-input-placeholder{
+                        font-size:18px;
+                        text-align:center;
+                    }
+                }
+                .button {
+                    height: 23px;
+                    font-size: 18px;
+                    width: 200px;
+                    background-color: #6dafff;
+                    color: white;
+                    border-radius: 20px;
+                    text-align: center;
+                    cursor:pointer;
+                }
+            }
+            </style>
+        </head>
+        <body>
+        <div class="title">柯耐弗在线网盘</div>
+        `
+
+    body += `
+    <div style="text-align:center;color:#ff5454;height:30px;line-height:30px;">${msg}</div>
+    <div class="login">
+        <div class="input"><input type="password" id="pwd" placeholder="请输入访问密码"></input></div>
+        <div class="button" onclick="javascript:location.href='/login?pwd='+document.getElementById('pwd').value">登录</div>
+    </div>
+    <div style="text-align:center;margin-top:60px;color:#a6a6a6;font-size:14px;">©2014 okonoff All right reserved </div>
+    </body>
+  </html>`
 
     ctx.body = body;
     await next()
 }
 
-module.exports = { generateIndex }
+module.exports = { generateIndex, generateLogin }
