@@ -18,4 +18,13 @@ jobs:
         run: |
           md test2
           dir
+      - name: SCP Files
+        uses: appleboy/scp-action@v0.0.1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "src"
+          target: website
           
