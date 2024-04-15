@@ -25,5 +25,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "src"
-          target: website
+          target: “website"
           
