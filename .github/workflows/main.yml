@@ -4,7 +4,7 @@ on: push
 jobs:
   my-job:
     name: 测试任务
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 打印文本
         run: |
@@ -16,6 +16,14 @@ jobs:
           npm i nodemon -g
       - name: 打印文件列表
         run: |
-          md test2
-          dir
+          ls
+      - name: 上传文件到服务器
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "*"
+          target: "./website/eiwen-disk"
           
