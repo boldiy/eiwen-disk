@@ -1,0 +1,29 @@
+name: 阿飞的workflow
+on: push
+
+jobs:
+  my-job:
+    name: 测试任务
+    runs-on: ubuntu-latest
+    steps:
+      - name: 打印文本
+        run: |
+          echo 我的名字是阿飞
+      - name: 下载源码
+        uses: actions/checkout@master 
+      - name: 安装依赖
+        run: |
+          npm i nodemon -g
+      - name: 打印文件列表
+        run: |
+          ls
+      - name: 上传文件到服务器
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "*"
+          target: "./website/eiwen-disk"
+          
