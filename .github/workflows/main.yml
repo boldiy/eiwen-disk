@@ -4,7 +4,7 @@ on: push
 jobs:
   my-job:
     name: 测试任务
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: 打印文本
         run: |
