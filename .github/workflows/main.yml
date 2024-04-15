@@ -16,8 +16,7 @@ jobs:
           npm i nodemon -g
       - name: 打印文件列表
         run: |
-          md test2
-          dir
+          ls
       - name: SCP Files
         uses: appleboy/scp-action@v0.0.1
         with:
