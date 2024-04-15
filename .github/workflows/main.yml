@@ -17,7 +17,7 @@ jobs:
       - name: 打印文件列表
         run: |
           ls
-      - name: SCP Files
+      - name: 上传文件到服务器
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -25,5 +25,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "*"
-          target: "./webiste"
+          target: "./website/eiwen-disk"
           
