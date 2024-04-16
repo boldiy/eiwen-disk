@@ -28,6 +28,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: | 
-            whoami
-            ls
+            cd website/eiwen-disk
+            npm i
+            npm i pm2 -g
+            pm2 start bin/www --name disk
       
