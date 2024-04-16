@@ -256,7 +256,7 @@ const generateLogin = async (ctx, next) => {
             </style>
         </head>
         <body>
-        <div class="title">柯耐弗在线网盘123</div>
+        <div class="title">柯耐弗在线网盘</div>
         `
 
     body += `
