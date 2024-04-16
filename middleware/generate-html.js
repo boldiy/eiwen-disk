@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 let logined = false;
 let currentToken = ''
-const password = '123' //网盘密码
+const password = 'okonoff123456' //网盘密码
 
 //主页面
 const generateIndex = async (ctx, next) => {

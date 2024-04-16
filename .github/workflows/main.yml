@@ -1,4 +1,8 @@
+#Author：Eiwen
+#Date： 2024/04/16
+
 name: 阿飞的workflow
+
 on: push
 
 jobs:
@@ -31,5 +35,5 @@ jobs:
             cd website/eiwen-disk
             npm i
             npm i pm2 -g
-            pm2 start bin/www --name disk
+            pm2 reload bin/www --name disk
       
