@@ -9,14 +9,8 @@ jobs:
       - name: 打印文本
         run: |
           echo 我的名字是阿飞
-      - name: 下载源码
+      - name: 下载源码文件
         uses: actions/checkout@master 
-      - name: 安装依赖
-        run: |
-          npm i nodemon -g
-      - name: 打印文件列表
-        run: |
-          ls
       - name: 上传文件到服务器
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -26,4 +20,12 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "*"
           target: "./website/eiwen-disk"
-          
+      - name: 执行远程SSH命令
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
+      
