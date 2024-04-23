@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 let logined = false;
 let currentToken = ''
-const password = 'okonoff123456' //网盘密码
+const password = '123' //网盘密码
 
 //主页面
 const generateIndex = async (ctx, next) => {
@@ -22,17 +22,20 @@ const generateIndex = async (ctx, next) => {
     let path = '/diskfiles/' //默认网盘路径
 
     //如果网盘路径不存在则自动创建
-    const filePath = process.cwd() + path;
+    let filePath = process.cwd() + path;
     if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath)
     }
 
     //获取path参数
     let paramsPath = ctx.query.path
+    console.log('dddd', paramsPath);
+
+    console.log('cccc', filePath + decodeURI(paramsPath) + '/');
 
     //拼接路径参数
     if (paramsPath) {
-        path = filePath + decodeURI(paramsPath) + '/'
+        filePath = filePath + decodeURI(paramsPath) + '/'
     }
 
     let body = "";
@@ -163,7 +166,7 @@ const generateIndex = async (ctx, next) => {
             if (ext == '.rar' || ext == '.zip') { className = 'rar' }
             body += `
             <li>
-            <div class="name ${className}"><a href="${filePath + item}" target="_blank">${item}</a></div>
+            <div class="name ${className}"><a href="${'diskfiles/' + item}" target="_blank">${item}</a></div>
             <div class="size">${parseFloat(fileInfo.size / 1024).toFixed(2)}KB</div>
             <div class="type">文件</div>
             </li>`

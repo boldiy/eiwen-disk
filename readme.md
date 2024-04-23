@@ -9,19 +9,14 @@
 3. 运行程序 ```npm run dev```
 
 
-
-<<<<<<< HEAD
-### 效果展示:
-=======
 ### 配置说明
 
 * node版本：v20.11.1
-* 默认访问地址：http://localhost:3000
+* 默认访问地址：http://localhost:8091
 * 端口修改地址：/bin/www
 * 初始密码：123
 * 修改密码位置：middleware/generate-html.js
 
 ### 效果展示
->>>>>>> 71ab41c4def9da0c183705950179e2c66dfe63fe
 
 ![图片](https://raw.githubusercontent.com/boldiy/eiwen-disk/master/doc/image.png)
